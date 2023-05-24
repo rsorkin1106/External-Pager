@@ -53,21 +53,30 @@ page_table_entry_t ptes[VM_ARENA_SIZE/VM_PAGESIZE];
 extern page_table_t *page_table_base_register;
 ```
 ## 3. How to use
-```
 Here is an example application program that uses the external pager.
+```
 #include <iostream>
+#include <cstring>
+#include <unistd.h>
 #include "vm_app.h"
-using namespace std;
+
+using std::cout;
+
 int main()
 {
-char *p;
-p = (char *) vm_extend(0);
-p[0] = 'h';
-p[1] = 'e';
-p[2] = 'l';
-p[3] = 'l';
-p[4] = 'o';
-vm_syslog(p, 5);
+    /* Allocate swap-backed page from the arena */
+    char *filename = (char *) vm_map(nullptr, 0);
+
+    /* Write the name of the file that will be mapped */
+    strcpy(filename, "lampson83.txt");
+
+    /* Map a page from the specified file */
+    char *p = (char *) vm_map (filename, 0);
+
+    /* Print the first part of the paper */
+    for (unsigned int i=0; i<1937; i++) {
+	cout << p[i];
+    }
 }
 ```
 ## 4 Features
