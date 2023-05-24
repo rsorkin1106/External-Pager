@@ -53,7 +53,8 @@ page_table_entry_t ptes[VM_ARENA_SIZE/VM_PAGESIZE];
 extern page_table_t *page_table_base_register;
 ```
 ## 3. How to use
-Here is an example application program that uses the external pager.
+Here is an example application program that uses the external pager. This file (testExample.cpp) is also included in the repo:
+
 ```
 #include <iostream>
 #include <cstring>
